@@ -9,6 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body class="romantic-section">
+    <video id="bgVideo" autoplay muted loop>
+        <source src="img/bg hrt.mp4" type="video/mp4">
+    </video>
     <!-- central text area -->
     <div class="content-box">
         <p>உன் கை பிடிச்சு தொடங்கின பாதை,<br>
@@ -17,13 +20,17 @@
 கடைசி வரைக்கும் நீயே என் காதல். ❤️</p>
     </div>
 
+    <button id="backButton">
+        <img src="img/backk.png" alt="Back">
+    </button>
+
     <script>
         // spawn hearts on background clicks, excluding clicks inside content box
         document.body.addEventListener('click', function(e) {
             if (e.target.closest('.content-box')) return;
             const heart = document.createElement('span');
             heart.className = 'heart';
-            heart.textContent = '❤️';
+            heart.textContent = '🖤❤️';
             // random size and initial offset
             const size = 20 + Math.random() * 20;
             heart.style.fontSize = size + 'px';
@@ -32,6 +39,16 @@
             document.body.appendChild(heart);
             setTimeout(() => heart.remove(), 2500);
         });
+
+        // simplified back button always returns to home
+        (function(){
+            const btn = document.getElementById('backButton');
+            if(btn){
+                btn.addEventListener('click', function(){
+                    window.location.href = 'index.html';
+                });
+            }
+        })();
     </script>
 </body>
 </html>
