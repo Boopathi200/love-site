@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>For You ❤️</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="center">
+
+<button class="heart-btn" id="playfulBtn">💖</button>
+
+<script>
+let clickCount = 0;
+const maxClicks = 1;
+const btn = document.getElementById('playfulBtn');
+
+function moveButtonRandomly() {
+  const maxX = window.innerWidth - btn.offsetWidth;
+  const maxY = window.innerHeight - btn.offsetHeight;
+  
+  const randomX = Math.random() * maxX;
+  const randomY = Math.random() * maxY;
+  
+  btn.style.position = 'fixed';
+  btn.style.left = randomX + 'px';
+  btn.style.top = randomY + 'px';
+}
+
+btn.addEventListener('mouseove', moveButtonRandomly);
+
+btn.addEventListener('click', function(e) {
+  e.preventDefault();
+  clickCount++;
+  moveButtonRandomly();
+  
+  if (clickCount >= maxClicks) {
+    window.location.href = 'open.html';
+  }
+});
+</script>
+
+</body>
+</html>
