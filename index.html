@@ -9,28 +9,28 @@
 </head>
 <body>
 
-  <!-- Audio plays once and loops -->
-  <audio id="bgAudio" autoplay loop>
-  <source src="img/song.mp3" type="audio/mp3">
-</audio>
+  <!-- Audio (continuous) -->
+  <audio id="bgAudio" loop>
+    <source src="img/song.mp3" type="audio/mp3">
+  </audio>
 
-  <!-- Section 1: Landing page with playful heart -->
+  <!-- PAGE 1: Heart button -->
   <section id="page1" class="center">
     <button class="heart-btn" id="playfulBtn">💖</button>
   </section>
 
-  <!-- Section 2: Open page with GIF -->
+  <!-- PAGE 2: GIF + Typewriter -->
   <section id="page2" class="romantic-section" style="display:none;">
     <button id="backButton2">
       <img src="img/backk.png" alt="Back">
     </button>
     <h1 id="text"></h1>
     <a id="gifLink" href="#">
-      <img id="centerGif" src="img/gif hug.gif" alt="Love GIF">
+      <img id="centerGif" src="img/gif_hug.gif" alt="Love GIF">
     </a>
   </section>
 
-  <!-- Section 3: Love letter page -->
+  <!-- PAGE 3: Love Letter + floating hearts -->
   <section id="page3" class="romantic-section" style="display:none;">
     <div class="content-box">
       <p>உன் கை பிடிச்சு தொடங்கின பாதை,<br>
@@ -43,50 +43,50 @@
     </button>
   </section>
 
-  <script src="script.js"></script>
-
+  <!-- SCRIPT -->
   <script>
-    // Section navigation
+    // Sections
     const page1 = document.getElementById('page1');
     const page2 = document.getElementById('page2');
     const page3 = document.getElementById('page3');
-    const gifLink = document.getElementById('gifLink');
-
-    // Page 1: playful heart button
     const btn = document.getElementById('playfulBtn');
-    btn.addEventListener('mouseover', () => {
-      const maxX = window.innerWidth - btn.offsetWidth;
-      const maxY = window.innerHeight - btn.offsetHeight;
-      btn.style.left = Math.random() * maxX + 'px';
-      btn.style.top = Math.random() * maxY + 'px';
-      btn.style.position = 'fixed';
-    });
+    const gifLink = document.getElementById('gifLink');
+    const textEl = document.getElementById('text');
+    const bgAudio = document.getElementById('bgAudio');
 
+    // Try autoplay
+    bgAudio.play().catch(() => console.log("Autoplay blocked"));
+
+    // Start audio on first click anywhere
+    document.body.addEventListener('click', () => {
+      if(bgAudio.paused) bgAudio.play().catch(e => console.log(e));
+    }, { once: true });
+
+    // PAGE 1: Heart click -> page2
     btn.addEventListener('click', () => {
       page1.style.display = 'none';
       page2.style.display = 'flex';
-      typeWriter(); // start typewriter on page2
+      typeWriter();
     });
 
-    // GIF click: go to love letter page
+    // PAGE 2: GIF click -> page3
     gifLink.addEventListener('click', (e) => {
       e.preventDefault();
       page2.style.display = 'none';
       page3.style.display = 'flex';
     });
 
-    // Back buttons
+    // BACK buttons
     document.getElementById('backButton2').addEventListener('click', () => {
       page2.style.display = 'none';
       page1.style.display = 'flex';
     });
-
     document.getElementById('backButton3').addEventListener('click', () => {
       page3.style.display = 'none';
       page2.style.display = 'flex';
     });
 
-    // Floating hearts on page3
+    // PAGE 3: Floating hearts
     page3.addEventListener('click', function(e) {
       if (e.target.closest('.content-box')) return;
       const heart = document.createElement('span');
@@ -100,11 +100,9 @@
       setTimeout(() => heart.remove(), 2500);
     });
 
-    // Typewriter for page2
-    let msg = "I Love You So Much ❤️";
+    // Typewriter text
+    const msg = "I Love You So Much ❤️";
     let i = 0;
-    const textEl = document.getElementById("text");
-
     function typeWriter() {
       if(i < msg.length){
         textEl.innerHTML += msg.charAt(i);
@@ -112,11 +110,6 @@
         setTimeout(typeWriter, 100);
       }
     }
-    // ensure audio plays after first interaction (click)
-const bgAudio = document.getElementById('bgMusic');
-document.body.addEventListener('click', () => {
-  if (bgAudio.paused) bgAudio.play().catch(e => console.log(e));
-}, { once: true });
   </script>
 
 </body>
