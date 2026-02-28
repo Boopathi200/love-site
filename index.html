@@ -1,42 +1,123 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>For You ❤️</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For You ❤️</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
 </head>
-<body class="center">
+<body>
 
-<button class="heart-btn" id="playfulBtn">💖</button>
+  <!-- Audio plays once and loops -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="img/song.mp3" type="audio/mp3">
+  </audio>
 
-<script>
-let clickCount = 0;
-const maxClicks = 1;
-const btn = document.getElementById('playfulBtn');
+  <!-- Section 1: Landing page with playful heart -->
+  <section id="page1" class="center">
+    <button class="heart-btn" id="playfulBtn">💖</button>
+  </section>
 
-function moveButtonRandomly() {
-  const maxX = window.innerWidth - btn.offsetWidth;
-  const maxY = window.innerHeight - btn.offsetHeight;
-  
-  const randomX = Math.random() * maxX;
-  const randomY = Math.random() * maxY;
-  
-  btn.style.position = 'fixed';
-  btn.style.left = randomX + 'px';
-  btn.style.top = randomY + 'px';
-}
+  <!-- Section 2: Open page with GIF -->
+  <section id="page2" class="romantic-section" style="display:none;">
+    <button id="backButton2">
+      <img src="img/backk.png" alt="Back">
+    </button>
+    <h1 id="text"></h1>
+    <a id="gifLink" href="#">
+      <img id="centerGif" src="img/gif hug.gif" alt="Love GIF">
+    </a>
+  </section>
 
-btn.addEventListener('mouseove', moveButtonRandomly);
+  <!-- Section 3: Love letter page -->
+  <section id="page3" class="romantic-section" style="display:none;">
+    <div class="content-box">
+      <p>உன் கை பிடிச்சு தொடங்கின பாதை,<br>
+         உன் நிழலோடு நடந்த என் வாழ்க்கை,<br>
+         மூச்சு இருக்குற வரைக்கும் அல்ல,<br>
+         கடைசி வரைக்கும் நீயே என் காதல். ❤️</p>
+    </div>
+    <button id="backButton3">
+      <img src="img/backk.png" alt="Back">
+    </button>
+  </section>
 
-btn.addEventListener('click', function(e) {
-  e.preventDefault();
-  clickCount++;
-  moveButtonRandomly();
-  
-  if (clickCount >= maxClicks) {
-    window.location.href = 'open.html';
-  }
-});
-</script>
+  <script src="script.js"></script>
+
+  <script>
+    // Section navigation
+    const page1 = document.getElementById('page1');
+    const page2 = document.getElementById('page2');
+    const page3 = document.getElementById('page3');
+    const gifLink = document.getElementById('gifLink');
+
+    // Page 1: playful heart button
+    const btn = document.getElementById('playfulBtn');
+    btn.addEventListener('mouseover', () => {
+      const maxX = window.innerWidth - btn.offsetWidth;
+      const maxY = window.innerHeight - btn.offsetHeight;
+      btn.style.left = Math.random() * maxX + 'px';
+      btn.style.top = Math.random() * maxY + 'px';
+      btn.style.position = 'fixed';
+    });
+
+    btn.addEventListener('click', () => {
+      page1.style.display = 'none';
+      page2.style.display = 'flex';
+      typeWriter(); // start typewriter on page2
+    });
+
+    // GIF click: go to love letter page
+    gifLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      page2.style.display = 'none';
+      page3.style.display = 'flex';
+    });
+
+    // Back buttons
+    document.getElementById('backButton2').addEventListener('click', () => {
+      page2.style.display = 'none';
+      page1.style.display = 'flex';
+    });
+
+    document.getElementById('backButton3').addEventListener('click', () => {
+      page3.style.display = 'none';
+      page2.style.display = 'flex';
+    });
+
+    // Floating hearts on page3
+    page3.addEventListener('click', function(e) {
+      if (e.target.closest('.content-box')) return;
+      const heart = document.createElement('span');
+      heart.className = 'heart';
+      heart.textContent = '🖤❤️';
+      const size = 20 + Math.random() * 20;
+      heart.style.fontSize = size + 'px';
+      heart.style.left = e.clientX - size/2 + 'px';
+      heart.style.top = e.clientY - size/2 + 'px';
+      page3.appendChild(heart);
+      setTimeout(() => heart.remove(), 2500);
+    });
+
+    // Typewriter for page2
+    let msg = "I Love You So Much ❤️";
+    let i = 0;
+    const textEl = document.getElementById("text");
+
+    function typeWriter() {
+      if(i < msg.length){
+        textEl.innerHTML += msg.charAt(i);
+        i++;
+        setTimeout(typeWriter, 100);
+      }
+    }
+    // ensure audio plays after first interaction (click)
+const bgAudio = document.getElementById('bgAudio');
+document.body.addEventListener('click', () => {
+  if (bgAudio.paused) bgAudio.play().catch(e => console.log(e));
+}, { once: true });
+  </script>
 
 </body>
 </html>

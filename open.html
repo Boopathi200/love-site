@@ -6,11 +6,7 @@
 </head>
 <body class="love-bg">
 
-<video id="bgVideo" autoplay muted loop>
-  <source src="img\bg hrt.mp4" type="video/mp4">
-</video>
-
-<button id="backButton">
+<button id="backButton" onclick="history.back()">
   <img src="img/backk.png" alt="Back">
 </button>
 
@@ -23,12 +19,16 @@
 </audio>
 
 <script>
-// simplified back handler
+// back button with fallback
 (function(){
   const btn = document.getElementById('backButton');
   if(btn){
     btn.addEventListener('click', function(){
-      window.location.href = 'index.html';
+      if(history.length>1){
+        history.back();
+      } else {
+        window.location.href='index.html';
+      }
     });
   }
 })();
