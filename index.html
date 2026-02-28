@@ -10,9 +10,9 @@
 <body>
 
   <!-- Audio plays once and loops -->
-  <audio id="bgMusic" autoplay loop>
-    <source src="img/song.mp3" type="audio/mp3">
-  </audio>
+  <audio id="bgAudio" autoplay loop>
+  <source src="img/song.mp3" type="audio/mp3">
+</audio>
 
   <!-- Section 1: Landing page with playful heart -->
   <section id="page1" class="center">
@@ -113,7 +113,7 @@
       }
     }
     // ensure audio plays after first interaction (click)
-const bgAudio = document.getElementById('bgAudio');
+const bgAudio = document.getElementById('bgMusic');
 document.body.addEventListener('click', () => {
   if (bgAudio.paused) bgAudio.play().catch(e => console.log(e));
 }, { once: true });
